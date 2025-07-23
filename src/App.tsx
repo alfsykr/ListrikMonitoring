@@ -5,6 +5,7 @@ import { AreaChart } from './components/AreaChart';
 import { ParameterTable } from './components/ParameterTable';
 import { PieChart } from './components/PieChart';
 import { MonitoringTable } from './components/MonitoringTable';
+import { LineChart } from './components/LineChart';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -38,19 +39,30 @@ function App() {
     return slots;
   };
 
-  // Generate data for each parameter
-  const generateParameterData = (baseValue, variation, precision = 1) => {
+  // Generate overall system data (average of R, S, T phases)
+  const generateOverallData = () => {
     const times = generateTimeSlots();
-    return times.map(time => ({
-      time,
-      value: baseValue + (Math.random() - 0.5) * variation
-    }));
+    return {
+      voltage: times.map(time => ({
+        time,
+        value: (realTimeData.voltageR + realTimeData.voltageS + realTimeData.voltageT) / 3 + (Math.random() - 0.5) * 10
+      })),
+      current: times.map(time => ({
+        time,
+        value: (realTimeData.currentR + realTimeData.currentS + realTimeData.currentT) / 3 + (Math.random() - 0.5) * 0.5
+      })),
+      power: times.map(time => ({
+        time,
+        value: (realTimeData.powerR + realTimeData.powerS + realTimeData.powerT) / 3 + (Math.random() - 0.5) * 100
+      })),
+      kwh: times.map(time => ({
+        time,
+        value: (realTimeData.kwhR + realTimeData.kwhS + realTimeData.kwhT) / 3 + (Math.random() - 0.5) * 2
+      }))
+    };
   };
 
-  const [voltageData, setVoltageData] = useState(generateParameterData(215, 20));
-  const [currentData, setCurrentData] = useState(generateParameterData(4.5, 0.8));
-  const [powerData, setPowerData] = useState(generateParameterData(950, 200));
-  const [cosφData, setCosφData] = useState(generateParameterData(0.88, 0.1));
+  const [overallSystemData, setOverallSystemData] = useState(generateOverallData());
 
   // Generate monitoring table data
   const generateMonitoringData = (phaseOffset = 0) => {
@@ -115,37 +127,31 @@ function App() {
       const now = new Date();
       const newTime = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
       
-      // Add new data point and remove oldest (keep only 6 points)
-      setVoltageData(prev => {
-        const newData = [...prev.slice(1), {
-          time: newTime,
-          value: 215 + (Math.random() - 0.5) * 20
-        }];
-        return newData;
-      });
-      
-      setCurrentData(prev => {
-        const newData = [...prev.slice(1), {
-          time: newTime,
-          value: 4.5 + (Math.random() - 0.5) * 0.8
-        }];
-        return newData;
-      });
-      
-      setPowerData(prev => {
-        const newData = [...prev.slice(1), {
-          time: newTime,
-          value: 950 + (Math.random() - 0.5) * 200
-        }];
-        return newData;
-      });
-      
-      setCosφData(prev => {
-        const newData = [...prev.slice(1), {
-          time: newTime,
-          value: Math.max(0.7, Math.min(1.0, 0.88 + (Math.random() - 0.5) * 0.1))
-        }];
-        return newData;
+      // Update overall system data
+      setOverallSystemData(prev => {
+        const avgVoltage = (realTimeData.voltageR + realTimeData.voltageS + realTimeData.voltageT) / 3;
+        const avgCurrent = (realTimeData.currentR + realTimeData.currentS + realTimeData.currentT) / 3;
+        const avgPower = (realTimeData.powerR + realTimeData.powerS + realTimeData.powerT) / 3;
+        const avgKwh = (realTimeData.kwhR + realTimeData.kwhS + realTimeData.kwhT) / 3;
+        
+        return {
+          voltage: [...prev.voltage.slice(1), {
+            time: newTime,
+            value: avgVoltage + (Math.random() - 0.5) * 10
+          }],
+          current: [...prev.current.slice(1), {
+            time: newTime,
+            value: avgCurrent + (Math.random() - 0.5) * 0.5
+          }],
+          power: [...prev.power.slice(1), {
+            time: newTime,
+            value: avgPower + (Math.random() - 0.5) * 100
+          }],
+          kwh: [...prev.kwh.slice(1), {
+            time: newTime,
+            value: avgKwh + (Math.random() - 0.5) * 2
+          }]
+        };
       });
     }, 30000); // 30 seconds for demo (should be 600000 for real 10 minutes)
 
@@ -387,6 +393,37 @@ function App() {
               icon={RotateCw}
               color="green"
               trend={1.8}
+            />
+          </div>
+        </div>
+
+        {/* Overall System Charts */}
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Overall System Trends</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <LineChart
+              title="Tegangan (V)"
+              data={overallSystemData.voltage}
+              color="blue"
+              unit="V"
+            />
+            <LineChart
+              title="Arus (A)"
+              data={overallSystemData.current}
+              color="yellow"
+              unit="A"
+            />
+            <LineChart
+              title="Daya (W)"
+              data={overallSystemData.power}
+              color="purple"
+              unit="W"
+            />
+            <LineChart
+              title="kWh"
+              data={overallSystemData.kwh}
+              color="green"
+              unit="kWh"
             />
           </div>
         </div>
