@@ -20,7 +20,11 @@ function App() {
     voltageT: 208.95,
     currentT: 4.41,
     powerT: 921.33,
-    kwhT: 14.89
+    kwhT: 14.89,
+    voltage: 211.45,
+    current: 4.54,
+    power: 960.18,
+    cosφ: 0.88
   });
 
   // Generate time slots for 10-minute intervals
@@ -35,7 +39,7 @@ function App() {
   };
 
   // Generate data for each parameter
-  const generateParameterData = (baseValue: number, variation: number, precision: number = 1) => {
+  const generateParameterData = (baseValue, variation, precision = 1) => {
     const times = generateTimeSlots();
     return times.map(time => ({
       time,
@@ -97,7 +101,11 @@ function App() {
         voltageT: prev.voltageT + (Math.random() - 0.5) * 2,
         currentT: prev.currentT + (Math.random() - 0.5) * 0.2,
         powerT: prev.powerT + (Math.random() - 0.5) * 20,
-        kwhT: prev.kwhT + (Math.random() - 0.5) * 0.1
+        kwhT: prev.kwhT + (Math.random() - 0.5) * 0.1,
+        voltage: prev.voltage + (Math.random() - 0.5) * 2,
+        current: prev.current + (Math.random() - 0.5) * 0.2,
+        power: prev.power + (Math.random() - 0.5) * 20,
+        cosφ: Math.max(0.7, Math.min(1.0, prev.cosφ + (Math.random() - 0.5) * 0.02))
       }));
     }, 2000);
 
@@ -320,70 +328,43 @@ function App() {
           </div>
         </div>
 
-        {/* System Parameters Distribution */}
+        {/* Overall System Metrics */}
         <div className="mb-8">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Phase Distribution Overview</h2>
-            <p className="text-gray-600">Real-time distribution analysis of three-phase electrical parameters</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Overall System</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <MetricCard
+              title="Tegangan"
+              value={realTimeData.voltage.toFixed(2)}
+              unit="V"
+              icon={Zap}
+              color="blue"
+              trend={2.3}
+            />
+            <MetricCard
+              title="Arus"
+              value={realTimeData.current.toFixed(2)}
+              unit="A"
+              icon={Activity}
+              color="yellow"
+              trend={-1.2}
+            />
+            <MetricCard
+              title="Daya"
+              value={realTimeData.power.toFixed(2)}
+              unit="W"
+              icon={Gauge}
+              color="purple"
+              trend={5.7}
+            />
+            <MetricCard
+              title="Cos φ"
+              value={realTimeData.cosφ.toFixed(3)}
+              unit=""
+              icon={RotateCw}
+              color="green"
+              trend={1.8}
+            />
           </div>
-          <div className="flex justify-center">
-            <div className="w-full max-w-md">
-              <PieChart title="Phase Distribution" data={pieChartData} />
-            </div>
-          </div>
-        </div>
-
-        {/* Monitoring Table */}
-        <div className="mb-8">
-          <MonitoringTable data={monitoringData} />
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="text-center text-sm text-gray-600">
-            © 2025 Electrical Power Monitoring System. Powered by React & Tailwind CSS.
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
-export default App;
-          <MetricCard
-            title="Tegangan"
-            value={realTimeData.voltage.toFixed(2)}
-            unit="V"
-            icon={Zap}
-            color="blue"
-            trend={2.3}
-          />
-          <MetricCard
-            title="Arus"
-            value={realTimeData.current.toFixed(2)}
-            unit="A"
-            icon={Activity}
-            color="yellow"
-            trend={-1.2}
-          />
-          <MetricCard
-            title="Daya"
-            value={realTimeData.power.toFixed(2)}
-            unit="W"
-            icon={Gauge}
-            color="purple"
-            trend={5.7}
-          />
-          <MetricCard
-            title="Cos φ"
-            value={realTimeData.cosφ.toFixed(3)}
-            unit=""
-            icon={RotateCw}
-            color="green"
-            trend={1.8}
-          />
         </div>
 
         {/* Parameter Tables */}
@@ -428,12 +409,12 @@ export default App;
         {/* System Parameters Distribution */}
         <div className="mb-8">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">System Parameters Distribution</h2>
-            <p className="text-gray-600">Real-time distribution analysis of electrical parameters</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Phase Distribution Overview</h2>
+            <p className="text-gray-600">Real-time distribution analysis of three-phase electrical parameters</p>
           </div>
           <div className="flex justify-center">
             <div className="w-full max-w-md">
-              <PieChart title="Parameter Distribution Overview" data={pieChartData} />
+              <PieChart title="Phase Distribution" data={pieChartData} />
             </div>
           </div>
         </div>
