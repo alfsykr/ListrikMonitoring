@@ -9,10 +9,18 @@ import { MonitoringTable } from './components/MonitoringTable';
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [realTimeData, setRealTimeData] = useState({
-    voltage: 210.08,
-    current: 4.54,
-    power: 953.76,
-    cosφ: 0.891
+    voltageR: 210.08,
+    currentR: 4.54,
+    powerR: 953.76,
+    kwhR: 15.23,
+    voltageS: 215.32,
+    currentS: 4.67,
+    powerS: 1005.45,
+    kwhS: 16.78,
+    voltageT: 208.95,
+    currentT: 4.41,
+    powerT: 921.33,
+    kwhT: 14.89
   });
 
   // Generate time slots for 10-minute intervals
@@ -67,10 +75,9 @@ function App() {
 
   // Mock pie chart data
   const pieChartData = [
-    { label: 'Tegangan', value: realTimeData.voltage, color: '#3B82F6', percentage: 36 },
-    { label: 'Arus', value: realTimeData.current, color: '#F59E0B', percentage: 28 },
-    { label: 'Daya', value: realTimeData.power, color: '#6B7280', percentage: 20 },
-    { label: 'Cos φ', value: realTimeData.cosφ, color: '#10B981', percentage: 16 }
+    { label: 'Phase R', value: (realTimeData.voltageR + realTimeData.currentR + realTimeData.powerR) / 3, color: '#3B82F6', percentage: 33 },
+    { label: 'Phase S', value: (realTimeData.voltageS + realTimeData.currentS + realTimeData.powerS) / 3, color: '#F59E0B', percentage: 34 },
+    { label: 'Phase T', value: (realTimeData.voltageT + realTimeData.currentT + realTimeData.powerT) / 3, color: '#10B981', percentage: 33 }
   ];
 
   useEffect(() => {
@@ -79,10 +86,18 @@ function App() {
       
       // Simulate real-time data updates
       setRealTimeData(prev => ({
-        voltage: prev.voltage + (Math.random() - 0.5) * 2,
-        current: prev.current + (Math.random() - 0.5) * 0.2,
-        power: prev.power + (Math.random() - 0.5) * 20,
-        cosφ: Math.max(0.7, Math.min(1.0, prev.cosφ + (Math.random() - 0.5) * 0.02))
+        voltageR: prev.voltageR + (Math.random() - 0.5) * 2,
+        currentR: prev.currentR + (Math.random() - 0.5) * 0.2,
+        powerR: prev.powerR + (Math.random() - 0.5) * 20,
+        kwhR: prev.kwhR + (Math.random() - 0.5) * 0.1,
+        voltageS: prev.voltageS + (Math.random() - 0.5) * 2,
+        currentS: prev.currentS + (Math.random() - 0.5) * 0.2,
+        powerS: prev.powerS + (Math.random() - 0.5) * 20,
+        kwhS: prev.kwhS + (Math.random() - 0.5) * 0.1,
+        voltageT: prev.voltageT + (Math.random() - 0.5) * 2,
+        currentT: prev.currentT + (Math.random() - 0.5) * 0.2,
+        powerT: prev.powerT + (Math.random() - 0.5) * 20,
+        kwhT: prev.kwhT + (Math.random() - 0.5) * 0.1
       }));
     }, 2000);
 
@@ -188,8 +203,155 @@ function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Main Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Phase R Metrics */}
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Phase R</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <MetricCard
+              title="Tegangan R"
+              value={realTimeData.voltageR.toFixed(2)}
+              unit="V"
+              icon={Zap}
+              color="blue"
+              trend={2.3}
+            />
+            <MetricCard
+              title="Arus R"
+              value={realTimeData.currentR.toFixed(2)}
+              unit="A"
+              icon={Activity}
+              color="yellow"
+              trend={-1.2}
+            />
+            <MetricCard
+              title="Daya R"
+              value={realTimeData.powerR.toFixed(2)}
+              unit="W"
+              icon={Gauge}
+              color="purple"
+              trend={5.7}
+            />
+            <MetricCard
+              title="kWh R"
+              value={realTimeData.kwhR.toFixed(2)}
+              unit="kWh"
+              icon={RotateCw}
+              color="green"
+              trend={1.8}
+            />
+          </div>
+        </div>
+
+        {/* Phase S Metrics */}
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Phase S</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <MetricCard
+              title="Tegangan S"
+              value={realTimeData.voltageS.toFixed(2)}
+              unit="V"
+              icon={Zap}
+              color="blue"
+              trend={1.8}
+            />
+            <MetricCard
+              title="Arus S"
+              value={realTimeData.currentS.toFixed(2)}
+              unit="A"
+              icon={Activity}
+              color="yellow"
+              trend={2.1}
+            />
+            <MetricCard
+              title="Daya S"
+              value={realTimeData.powerS.toFixed(2)}
+              unit="W"
+              icon={Gauge}
+              color="purple"
+              trend={3.4}
+            />
+            <MetricCard
+              title="kWh S"
+              value={realTimeData.kwhS.toFixed(2)}
+              unit="kWh"
+              icon={RotateCw}
+              color="green"
+              trend={2.5}
+            />
+          </div>
+        </div>
+
+        {/* Phase T Metrics */}
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Phase T</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <MetricCard
+              title="Tegangan T"
+              value={realTimeData.voltageT.toFixed(2)}
+              unit="V"
+              icon={Zap}
+              color="blue"
+              trend={-0.5}
+            />
+            <MetricCard
+              title="Arus T"
+              value={realTimeData.currentT.toFixed(2)}
+              unit="A"
+              icon={Activity}
+              color="yellow"
+              trend={1.3}
+            />
+            <MetricCard
+              title="Daya T"
+              value={realTimeData.powerT.toFixed(2)}
+              unit="W"
+              icon={Gauge}
+              color="purple"
+              trend={-2.1}
+            />
+            <MetricCard
+              title="kWh T"
+              value={realTimeData.kwhT.toFixed(2)}
+              unit="kWh"
+              icon={RotateCw}
+              color="green"
+              trend={0.9}
+            />
+          </div>
+        </div>
+
+        {/* System Parameters Distribution */}
+        <div className="mb-8">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Phase Distribution Overview</h2>
+            <p className="text-gray-600">Real-time distribution analysis of three-phase electrical parameters</p>
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full max-w-md">
+              <PieChart title="Phase Distribution" data={pieChartData} />
+            </div>
+          </div>
+        </div>
+
+        {/* Monitoring Table */}
+        <div className="mb-8">
+          <MonitoringTable data={monitoringData} />
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="text-center text-sm text-gray-600">
+            © 2025 Electrical Power Monitoring System. Powered by React & Tailwind CSS.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
           <MetricCard
             title="Tegangan"
             value={realTimeData.voltage.toFixed(2)}
