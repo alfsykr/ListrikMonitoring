@@ -53,7 +53,7 @@ function App() {
   const [cosφData, setCosφData] = useState(generateParameterData(0.88, 0.1));
 
   // Generate monitoring table data
-  const generateMonitoringData = () => {
+  const generateMonitoringData = (phaseOffset = 0) => {
     const data = [];
     const now = new Date();
     
@@ -63,11 +63,10 @@ function App() {
       
       data.push({
         time: timeStr,
-        voltage: 215 + (Math.random() - 0.5) * 20,
+        voltage: 215 + phaseOffset + (Math.random() - 0.5) * 20,
         current: 4.5 + (Math.random() - 0.5) * 3,
-        power: 950 + (Math.random() - 0.5) * 600,
+        power: 950 + phaseOffset * 10 + (Math.random() - 0.5) * 600,
         energy: 150 + (Math.random() - 0.5) * 100,
-        cosφ: 0.8 + Math.random() * 0.2,
         status: 'Normal'
       });
     }
@@ -75,7 +74,9 @@ function App() {
     return data;
   };
 
-  const [monitoringData, setMonitoringData] = useState(generateMonitoringData());
+  const [monitoringDataR, setMonitoringDataR] = useState(generateMonitoringData(-5));
+  const [monitoringDataS, setMonitoringDataS] = useState(generateMonitoringData(0));
+  const [monitoringDataT, setMonitoringDataT] = useState(generateMonitoringData(5));
 
   // Mock pie chart data
   const pieChartData = [
@@ -153,14 +154,37 @@ function App() {
       const now = new Date();
       const newTime = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
       
-      setMonitoringData(prev => {
+      setMonitoringDataR(prev => {
+        const newData = [...prev.slice(1), {
+          time: newTime,
+          voltage: 210 + (Math.random() - 0.5) * 20,
+          current: 4.5 + (Math.random() - 0.5) * 3,
+          power: 950 + (Math.random() - 0.5) * 600,
+          energy: 150 + (Math.random() - 0.5) * 100,
+          status: 'Normal'
+        }];
+        return newData;
+      });
+      
+      setMonitoringDataS(prev => {
         const newData = [...prev.slice(1), {
           time: newTime,
           voltage: 215 + (Math.random() - 0.5) * 20,
           current: 4.5 + (Math.random() - 0.5) * 3,
-          power: 950 + (Math.random() - 0.5) * 600,
+          power: 960 + (Math.random() - 0.5) * 600,
           energy: 150 + (Math.random() - 0.5) * 100,
-          cosφ: 0.8 + Math.random() * 0.2,
+          status: 'Normal'
+        }];
+        return newData;
+      });
+      
+      setMonitoringDataT(prev => {
+        const newData = [...prev.slice(1), {
+          time: newTime,
+          voltage: 220 + (Math.random() - 0.5) * 20,
+          current: 4.5 + (Math.random() - 0.5) * 3,
+          power: 940 + (Math.random() - 0.5) * 600,
+          energy: 150 + (Math.random() - 0.5) * 100,
           status: 'Normal'
         }];
         return newData;
@@ -380,9 +404,13 @@ function App() {
           </div>
         </div>
 
-        {/* Monitoring Table */}
+        {/* Monitoring Tables */}
         <div className="mb-8">
-          <MonitoringTable data={monitoringData} />
+          <div className="space-y-8">
+            <MonitoringTable title="PZEM Power Monitoring Phase R" data={monitoringDataR} />
+            <MonitoringTable title="PZEM Power Monitoring Phase S" data={monitoringDataS} />
+            <MonitoringTable title="PZEM Power Monitoring Phase T" data={monitoringDataT} />
+          </div>
         </div>
       </main>
 

@@ -6,20 +6,20 @@ interface MonitoringData {
   current: number;
   power: number;
   energy: number;
-  cosφ: number;
   status: string;
 }
 
 interface MonitoringTableProps {
+  title: string;
   data: MonitoringData[];
 }
 
-export const MonitoringTable: React.FC<MonitoringTableProps> = ({ data }) => {
+export const MonitoringTable: React.FC<MonitoringTableProps> = ({ title, data }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-lg font-semibold text-black">
-          PZEM Power Monitoring (10-Minute Intervals)
+          {title} (10-Minute Intervals)
         </h3>
         <span className="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">
           Simulated Data
@@ -35,7 +35,6 @@ export const MonitoringTable: React.FC<MonitoringTableProps> = ({ data }) => {
               <th className="text-left py-3 px-4 font-medium text-black">Current (A)</th>
               <th className="text-left py-3 px-4 font-medium text-black">Power (W)</th>
               <th className="text-left py-3 px-4 font-medium text-black">Energy (kWh)</th>
-              <th className="text-left py-3 px-4 font-medium text-black">Cos φ</th>
               <th className="text-left py-3 px-4 font-medium text-black">Status</th>
             </tr>
           </thead>
@@ -52,7 +51,6 @@ export const MonitoringTable: React.FC<MonitoringTableProps> = ({ data }) => {
                 <td className="py-3 px-4 text-black">{row.current.toFixed(2)}</td>
                 <td className="py-3 px-4 text-black">{row.power.toFixed(2)}</td>
                 <td className="py-3 px-4 text-black">{row.energy.toFixed(2)}</td>
-                <td className="py-3 px-4 text-black">{row.cosφ.toFixed(3)}</td>
                 <td className="py-3 px-4">
                   <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
                     {row.status}
