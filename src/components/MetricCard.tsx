@@ -1,11 +1,10 @@
 import React from 'react';
-import { DivideIcon as LucideIcon } from 'lucide-react';
 
 interface MetricCardProps {
   title: string;
   value: string;
   unit: string;
-  icon: LucideIcon;
+  icon: React.ElementType;
   color: string;
   trend: number;
 }
@@ -18,8 +17,41 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   color,
   trend
 }) => {
+  const getBorderColorClass = (color: string) => {
+    const colorMap: Record<string, string> = {
+      blue: 'border-blue-500',
+      yellow: 'border-yellow-500',
+      purple: 'border-purple-500',
+      green: 'border-green-500',
+      red: 'border-red-500'
+    };
+    return colorMap[color] || 'border-gray-500';
+  };
+
+  const getBgColorClass = (color: string) => {
+    const colorMap: Record<string, string> = {
+      blue: 'bg-blue-100',
+      yellow: 'bg-yellow-100',
+      purple: 'bg-purple-100',
+      green: 'bg-green-100',
+      red: 'bg-red-100'
+    };
+    return colorMap[color] || 'bg-gray-100';
+  };
+
+  const getTextColorClass = (color: string) => {
+    const colorMap: Record<string, string> = {
+      blue: 'text-blue-600',
+      yellow: 'text-yellow-600',
+      purple: 'text-purple-600',
+      green: 'text-green-600',
+      red: 'text-red-600'
+    };
+    return colorMap[color] || 'text-gray-600';
+  };
+
   return (
-    <div className={`bg-white rounded-xl shadow-lg p-6 border-l-4 border-${color}-500 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
+    <div className={`bg-white rounded-xl shadow-lg p-6 border-l-4 ${getBorderColorClass(color)} hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}>
       <div className="flex items-center justify-between">
         <div>
           <p className="text-gray-600 text-sm font-medium">{title}</p>
@@ -31,8 +63,8 @@ export const MetricCard: React.FC<MetricCardProps> = ({
             <span>{trend >= 0 ? '↗' : '↘'} {Math.abs(trend)}%</span>
           </div>
         </div>
-        <div className={`p-3 rounded-full bg-${color}-100`}>
-          <Icon className={`w-6 h-6 text-${color}-600`} />
+        <div className={`p-3 rounded-full ${getBgColorClass(color)}`}>
+          <Icon className={`w-6 h-6 ${getTextColorClass(color)}`} />
         </div>
       </div>
     </div>
