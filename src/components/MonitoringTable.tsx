@@ -14,10 +14,7 @@ interface MonitoringTableProps {
   data: MonitoringData[];
 }
 
-export const MonitoringTable: React.FC<MonitoringTableProps> = ({
-  title,
-  data,
-}) => {
+export const MonitoringTable: React.FC<MonitoringTableProps> = ({ title, data }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
       <div className="flex justify-between items-center mb-6">
@@ -33,24 +30,12 @@ export const MonitoringTable: React.FC<MonitoringTableProps> = ({
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left py-3 px-4 font-medium text-black">
-                Time
-              </th>
-              <th className="text-left py-3 px-4 font-medium text-black">
-                Voltage (V)
-              </th>
-              <th className="text-left py-3 px-4 font-medium text-black">
-                Current (A)
-              </th>
-              <th className="text-left py-3 px-4 font-medium text-black">
-                Power (W)
-              </th>
-              <th className="text-left py-3 px-4 font-medium text-black">
-                Energy (kWh)
-              </th>
-              <th className="text-left py-3 px-4 font-medium text-black">
-                Status
-              </th>
+              <th className="text-left py-3 px-4 font-medium text-black">Time</th>
+              <th className="text-left py-3 px-4 font-medium text-black">Voltage (V)</th>
+              <th className="text-left py-3 px-4 font-medium text-black">Current (A)</th>
+              <th className="text-left py-3 px-4 font-medium text-black">Power (W)</th>
+              <th className="text-left py-3 px-4 font-medium text-black">Energy (kWh)</th>
+              <th className="text-left py-3 px-4 font-medium text-black">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -69,9 +54,7 @@ export const MonitoringTable: React.FC<MonitoringTableProps> = ({
                   {row.current.toFixed(2)}
                 </td>
                 <td className="py-3 px-4 text-black">{row.power.toFixed(2)}</td>
-                <td className="py-3 px-4 text-black">
-                  {row.energy.toFixed(2)}
-                </td>
+                <td className="py-3 px-4 text-black">{row.energy.toFixed(2)}</td>
                 <td className="py-3 px-4">
                   <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
                     {row.status}

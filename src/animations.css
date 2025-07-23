@@ -1,0 +1,201 @@
+/* Animations for scroll effects - Optimized for lower RAM usage */
+
+/* Fade In animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Slide Up animation */
+@keyframes slideUp {
+  from { 
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Slide In Left animation */
+@keyframes slideInLeft {
+  from { 
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to { 
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide In Right animation */
+@keyframes slideInRight {
+  from { 
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to { 
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Scale Up animation */
+@keyframes scaleUp {
+  from { 
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animation utility classes - Optimized for lower RAM usage */
+.animate-fade-in {
+  opacity: 0;
+  will-change: opacity;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
+}
+
+.animate-slide-left {
+  opacity: 0;
+  transform: translateX(-20px);
+  will-change: transform, opacity;
+}
+
+.animate-slide-right {
+  opacity: 0;
+  transform: translateX(20px);
+  will-change: transform, opacity;
+}
+
+.animate-scale-up {
+  opacity: 0;
+  transform: scale(0.9);
+  will-change: transform, opacity;
+}
+
+/* Animation active states - Optimized for lower RAM usage */
+.animate-fade-in.animate-active {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slide-up.animate-active {
+  animation: slideUp 0.5s ease forwards;
+}
+
+.animate-slide-left.animate-active {
+  animation: slideInLeft 0.5s ease forwards;
+}
+
+.animate-slide-right.animate-active {
+  animation: slideInRight 0.5s ease forwards;
+}
+
+.animate-scale-up.animate-active {
+  animation: scaleUp 0.5s ease forwards;
+}
+
+/* Release will-change after animation completes to free up resources */
+.animate-fade-in.animate-active,
+.animate-slide-up.animate-active,
+.animate-slide-left.animate-active,
+.animate-slide-right.animate-active,
+.animate-scale-up.animate-active {
+  will-change: auto;
+}
+
+/* Animation delay classes - Optimized for lower RAM usage */
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Disable animations for users who prefer reduced motion or in reduced memory mode */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-scale-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* Reduced memory mode styles */
+.reduced-memory-mode .animate-fade-in,
+.reduced-memory-mode .animate-slide-up,
+.reduced-memory-mode .animate-slide-left,
+.reduced-memory-mode .animate-slide-right,
+.reduced-memory-mode .animate-scale-up {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  will-change: auto !important;
+  transition: none !important;
+}
+
+/* Optimize rendering in reduced memory mode */
+.reduced-memory-mode * {
+  will-change: auto !important;
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+}
+
+/* Lazy loading image placeholder - optimized for lower RAM usage */
+.lazy-image {
+  transition: opacity 0.3s ease;
+  opacity: 0.5;
+  background-color: #f0f0f0;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+  background-color: transparent;
+}
+
+/* Disable blur filter in reduced memory mode to save RAM */
+.reduced-memory-mode .lazy-image {
+  transition: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Memory optimization - disable animations when not in viewport */
+@media screen and (min-width: 768px) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-scale-up {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px; /* Approximate size to prevent layout shifts */
+  }
+}

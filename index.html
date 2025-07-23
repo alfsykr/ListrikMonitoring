@@ -4,10 +4,56 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/assets/electrical.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';">
     <title>Electrical Power Monitoring Dashboard</title>
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/src/index.css" as="style">
+    <!-- Add memory management hints -->
+    <script>
+      // Set a reasonable memory limit for the application
+      if ('memory' in performance) {
+        console.log('Memory usage:', performance.memory);
+      }
+      
+      // Clean up unused resources periodically
+      function cleanupResources() {
+        // Force garbage collection in browsers that support it
+        if (window.gc) {
+          window.gc();
+        }
+        
+        // Schedule next cleanup
+        setTimeout(cleanupResources, 60000); // Run every minute
+      }
+      
+      // Start cleanup cycle
+      setTimeout(cleanupResources, 60000);
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Add low memory detection -->
+    <script>
+      // Monitor for low memory conditions
+      if ('connection' in navigator && 'memory' in navigator.connection) {
+        navigator.connection.addEventListener('change', function() {
+          if (navigator.connection.saveData || navigator.connection.effectiveType === 'slow-2g') {
+            // Reduce animations and effects in low-memory conditions
+            document.documentElement.classList.add('reduced-memory-mode');
+            console.log('Reduced memory mode activated');
+          }
+        });
+      }
+      
+      // Detect memory pressure
+      if ('onmemorypressure' in window) {
+        window.addEventListener('memorypressure', function(e) {
+          console.log('Memory pressure detected:', e.pressure);
+          // Reduce animations and effects
+          document.documentElement.classList.add('reduced-memory-mode');
+        });
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

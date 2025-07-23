@@ -4,6 +4,7 @@ import { MetricCard } from './components/MetricCard';
 import { PieChart } from './components/PieChart';
 import { MonitoringTable } from './components/MonitoringTable';
 import { LineChart } from './components/LineChart';
+import { AnimateOnScroll } from './components/AnimateOnScroll';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -208,7 +209,7 @@ function App() {
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <AnimateOnScroll type="slide-right" className="flex items-center space-x-3">
               <div className="p-2 bg-blue-600 rounded-lg">
                 <Zap className="w-6 h-6 text-white" />
               </div>
@@ -216,8 +217,8 @@ function App() {
                 <h1 className="text-2xl font-bold text-gray-900">Electrical Power Monitoring</h1>
                 <p className="text-sm text-gray-600">Real-time monitoring and analysis system</p>
               </div>
-            </div>
-            <div className="flex items-center space-x-4">
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-left" className="flex items-center space-x-4">
               <div className="flex items-center text-sm text-gray-600">
                 <Clock className="w-4 h-4 mr-1" />
                 {currentTime.toLocaleString('id-ID', {
@@ -233,230 +234,280 @@ function App() {
                 <Wifi className="w-4 h-4 mr-1" />
                 Connected
               </div>
-            </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Phase R Metrics */}
-        <div className="mb-6">
+        <AnimateOnScroll type="fade-in" className="mb-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Phase R</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <MetricCard
-              title="Tegangan R"
-              value={realTimeData.voltageR.toFixed(2)}
-              unit="V"
-              icon={Zap}
-              color="blue"
-              trend={2.3}
-            />
-            <MetricCard
-              title="Arus R"
-              value={realTimeData.currentR.toFixed(2)}
-              unit="A"
-              icon={Activity}
-              color="yellow"
-              trend={-1.2}
-            />
-            <MetricCard
-              title="Daya R"
-              value={realTimeData.powerR.toFixed(2)}
-              unit="W"
-              icon={Gauge}
-              color="purple"
-              trend={5.7}
-            />
-            <MetricCard
-              title="kWh R"
-              value={realTimeData.kwhR.toFixed(2)}
-              unit="kWh"
-              icon={RotateCw}
-              color="green"
-              trend={1.8}
-            />
+            <AnimateOnScroll type="slide-up" delay={100}>
+              <MetricCard
+                title="Tegangan R"
+                value={realTimeData.voltageR.toFixed(2)}
+                unit="V"
+                icon={Zap}
+                color="blue"
+                trend={2.3}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={200}>
+              <MetricCard
+                title="Arus R"
+                value={realTimeData.currentR.toFixed(2)}
+                unit="A"
+                icon={Activity}
+                color="yellow"
+                trend={-1.2}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={300}>
+              <MetricCard
+                title="Daya R"
+                value={realTimeData.powerR.toFixed(2)}
+                unit="W"
+                icon={Gauge}
+                color="purple"
+                trend={5.7}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={400}>
+              <MetricCard
+                title="kWh R"
+                value={realTimeData.kwhR.toFixed(2)}
+                unit="kWh"
+                icon={RotateCw}
+                color="green"
+                trend={1.8}
+              />
+            </AnimateOnScroll>
           </div>
-        </div>
+        </AnimateOnScroll>
 
         {/* Phase S Metrics */}
-        <div className="mb-6">
+        <AnimateOnScroll type="fade-in" className="mb-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Phase S</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <MetricCard
-              title="Tegangan S"
-              value={realTimeData.voltageS.toFixed(2)}
-              unit="V"
-              icon={Zap}
-              color="blue"
-              trend={1.8}
-            />
-            <MetricCard
-              title="Arus S"
-              value={realTimeData.currentS.toFixed(2)}
-              unit="A"
-              icon={Activity}
-              color="yellow"
-              trend={2.1}
-            />
-            <MetricCard
-              title="Daya S"
-              value={realTimeData.powerS.toFixed(2)}
-              unit="W"
-              icon={Gauge}
-              color="purple"
-              trend={3.4}
-            />
-            <MetricCard
-              title="kWh S"
-              value={realTimeData.kwhS.toFixed(2)}
-              unit="kWh"
-              icon={RotateCw}
-              color="green"
-              trend={2.5}
-            />
+            <AnimateOnScroll type="slide-up" delay={100}>
+              <MetricCard
+                title="Tegangan S"
+                value={realTimeData.voltageS.toFixed(2)}
+                unit="V"
+                icon={Zap}
+                color="blue"
+                trend={1.8}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={200}>
+              <MetricCard
+                title="Arus S"
+                value={realTimeData.currentS.toFixed(2)}
+                unit="A"
+                icon={Activity}
+                color="yellow"
+                trend={2.1}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={300}>
+              <MetricCard
+                title="Daya S"
+                value={realTimeData.powerS.toFixed(2)}
+                unit="W"
+                icon={Gauge}
+                color="purple"
+                trend={3.2}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={400}>
+              <MetricCard
+                title="kWh S"
+                value={realTimeData.kwhS.toFixed(2)}
+                unit="kWh"
+                icon={RotateCw}
+                color="green"
+                trend={2.5}
+              />
+            </AnimateOnScroll>
           </div>
-        </div>
+        </AnimateOnScroll>
 
         {/* Phase T Metrics */}
-        <div className="mb-8">
+        <AnimateOnScroll type="fade-in" className="mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Phase T</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <MetricCard
-              title="Tegangan T"
-              value={realTimeData.voltageT.toFixed(2)}
-              unit="V"
-              icon={Zap}
-              color="blue"
-              trend={-0.5}
-            />
-            <MetricCard
-              title="Arus T"
-              value={realTimeData.currentT.toFixed(2)}
-              unit="A"
-              icon={Activity}
-              color="yellow"
-              trend={1.3}
-            />
-            <MetricCard
-              title="Daya T"
-              value={realTimeData.powerT.toFixed(2)}
-              unit="W"
-              icon={Gauge}
-              color="purple"
-              trend={-2.1}
-            />
-            <MetricCard
-              title="kWh T"
-              value={realTimeData.kwhT.toFixed(2)}
-              unit="kWh"
-              icon={RotateCw}
-              color="green"
-              trend={0.9}
-            />
+            <AnimateOnScroll type="slide-up" delay={100}>
+              <MetricCard
+                title="Tegangan T"
+                value={realTimeData.voltageT.toFixed(2)}
+                unit="V"
+                icon={Zap}
+                color="blue"
+                trend={-0.5}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={200}>
+              <MetricCard
+                title="Arus T"
+                value={realTimeData.currentT.toFixed(2)}
+                unit="A"
+                icon={Activity}
+                color="yellow"
+                trend={1.3}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={300}>
+              <MetricCard
+                title="Daya T"
+                value={realTimeData.powerT.toFixed(2)}
+                unit="W"
+                icon={Gauge}
+                color="purple"
+                trend={-2.1}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={400}>
+              <MetricCard
+                title="kWh T"
+                value={realTimeData.kwhT.toFixed(2)}
+                unit="kWh"
+                icon={RotateCw}
+                color="green"
+                trend={0.9}
+              />
+            </AnimateOnScroll>
           </div>
-        </div>
+        </AnimateOnScroll>
 
         {/* Overall System Metrics */}
-        <div className="mb-8">
+        <AnimateOnScroll type="fade-in" className="mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Overall System</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <MetricCard
-              title="Tegangan"
-              value={realTimeData.voltage.toFixed(2)}
-              unit="V"
-              icon={Zap}
-              color="blue"
-              trend={2.3}
-            />
-            <MetricCard
-              title="Arus"
-              value={realTimeData.current.toFixed(2)}
-              unit="A"
-              icon={Activity}
-              color="yellow"
-              trend={-1.2}
-            />
-            <MetricCard
-              title="Daya"
-              value={realTimeData.power.toFixed(2)}
-              unit="W"
-              icon={Gauge}
-              color="purple"
-              trend={5.7}
-            />
-            <MetricCard
-              title="Cos φ"
-              value={realTimeData.cosφ.toFixed(3)}
-              unit=""
-              icon={RotateCw}
-              color="green"
-              trend={1.8}
-            />
+            <AnimateOnScroll type="slide-up" delay={100}>
+              <MetricCard
+                title="Tegangan"
+                value={realTimeData.voltage.toFixed(2)}
+                unit="V"
+                icon={Zap}
+                color="blue"
+                trend={2.3}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={200}>
+              <MetricCard
+                title="Arus"
+                value={realTimeData.current.toFixed(2)}
+                unit="A"
+                icon={Activity}
+                color="yellow"
+                trend={-1.2}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={300}>
+              <MetricCard
+                title="Daya"
+                value={realTimeData.power.toFixed(2)}
+                unit="W"
+                icon={Gauge}
+                color="purple"
+                trend={5.7}
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-up" delay={400}>
+              <MetricCard
+                title="Cos φ"
+                value={realTimeData.cosφ.toFixed(3)}
+                unit=""
+                icon={RotateCw}
+                color="green"
+                trend={1.8}
+              />
+            </AnimateOnScroll>
           </div>
-        </div>
+        </AnimateOnScroll>
 
         {/* Overall System Charts */}
-        <div className="mb-8">
+        <AnimateOnScroll type="fade-in" className="mb-8">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Overall System Trends</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <LineChart
-              title="Tegangan (V)"
-              data={overallSystemData.voltage}
-              color="blue"
-              unit="V"
-            />
-            <LineChart
-              title="Arus (A)"
-              data={overallSystemData.current}
-              color="yellow"
-              unit="A"
-            />
-            <LineChart
-              title="Daya (W)"
-              data={overallSystemData.power}
-              color="purple"
-              unit="W"
-            />
-            <LineChart
-              title="kWh"
-              data={overallSystemData.kwh}
-              color="green"
-              unit="kWh"
-            />
+            <AnimateOnScroll type="scale-up" delay={100}>
+              <LineChart
+                title="Tegangan (V)"
+                data={overallSystemData.voltage}
+                color="blue"
+                unit="V"
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="scale-up" delay={200}>
+              <LineChart
+                title="Arus (A)"
+                data={overallSystemData.current}
+                color="yellow"
+                unit="A"
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="scale-up" delay={300}>
+              <LineChart
+                title="Daya (W)"
+                data={overallSystemData.power}
+                color="purple"
+                unit="W"
+              />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="scale-up" delay={400}>
+              <LineChart
+                title="kWh"
+                data={overallSystemData.kwh}
+                color="green"
+                unit="kWh"
+              />
+            </AnimateOnScroll>
           </div>
-        </div>
+        </AnimateOnScroll>
 
         {/* System Parameters Distribution */}
-        <div className="mb-8">
+        <AnimateOnScroll type="fade-in" className="mb-8">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Phase Distribution Overview</h2>
             <p className="text-gray-600">Real-time distribution analysis of three-phase electrical parameters</p>
           </div>
           <div className="flex justify-center">
             <div className="w-full max-w-md">
-              <PieChart title="Phase Distribution" data={pieChartData} />
+              <AnimateOnScroll type="scale-up">
+                <PieChart title="Phase Distribution" data={pieChartData} />
+              </AnimateOnScroll>
             </div>
           </div>
-        </div>
+        </AnimateOnScroll>
 
         {/* Monitoring Tables */}
-        <div className="mb-8">
+        <AnimateOnScroll type="fade-in" className="mb-8">
           <div className="space-y-8">
-            <MonitoringTable title="PZEM Power Monitoring Phase R" data={monitoringDataR} />
-            <MonitoringTable title="PZEM Power Monitoring Phase S" data={monitoringDataS} />
-            <MonitoringTable title="PZEM Power Monitoring Phase T" data={monitoringDataT} />
+            <AnimateOnScroll type="slide-left" delay={100}>
+              <MonitoringTable title="PZEM Power Monitoring Phase R" data={monitoringDataR} />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-left" delay={200}>
+              <MonitoringTable title="PZEM Power Monitoring Phase S" data={monitoringDataS} />
+            </AnimateOnScroll>
+            <AnimateOnScroll type="slide-left" delay={300}>
+              <MonitoringTable title="PZEM Power Monitoring Phase T" data={monitoringDataT} />
+            </AnimateOnScroll>
           </div>
-        </div>
+        </AnimateOnScroll>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="text-center text-sm text-gray-600">
-            © 2025 Electrical Power Monitoring System. Powered by React & Tailwind CSS.
+      <AnimateOnScroll type="fade-in" className="bg-white border-t border-gray-200 mt-12">
+        <footer>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="text-center text-sm text-gray-600">
+              © 2025 Electrical Power Monitoring System. Powered by React & Tailwind CSS.
+            </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </AnimateOnScroll>
     </div>
   );
 }
