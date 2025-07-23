@@ -367,45 +367,6 @@ function App() {
           </div>
         </div>
 
-        {/* Parameter Tables */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <ParameterTable
-            title="Voltage"
-            unit="V"
-            data={voltageData}
-            color="cyan"
-            maxValue={240}
-            minValue={200}
-          />
-          <ParameterTable
-            title="Current"
-            unit="A"
-            data={currentData}
-            color="yellow"
-            maxValue={6}
-            minValue={3}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <ParameterTable
-            title="Power"
-            unit="W"
-            data={powerData}
-            color="blue"
-            maxValue={1200}
-            minValue={700}
-          />
-          <ParameterTable
-            title="Cos φ"
-            unit=""
-            data={cosφData}
-            color="purple"
-            maxValue={1.0}
-            minValue={0.7}
-          />
-        </div>
-
         {/* System Parameters Distribution */}
         <div className="mb-8">
           <div className="text-center mb-6">
